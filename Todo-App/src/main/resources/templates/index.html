@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do App</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+    
+    body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 8px 0;
+}
+
+.completed {
+    text-decoration: line-through;
+    color: grey;
+}
+
+form {
+    margin-top: 20px;
+}
+
+input[type="text"] {
+    padding: 8px;
+    width: 300px;
+    margin-right: 10px;
+}
+
+button {
+    padding: 8px 12px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.toggle-btn {
+    background-color: #28a745;
+}
+
+.toggle-btn:hover {
+    background-color: #218838;
+}
+    
+    
+    </style>
+</head>
+<body>
+    <h1>Daily Activities</h1>
+    <ul>
+        <th:block th:each="todo : ${todos}">
+            <li th:classappend="${todo.completed} ? 'completed' : ''">
+                <span th:text="${todo.activity}"></span>
+                <form action="/toggle/{${todo.id}}" method="post" style="display:inline;">
+                    <button type="submit" class="toggle-btn" th:text="${todo.completed} ? 'Undo' : 'Complete'"></button>
+                </form>
+            </li>
+        </th:block>
+    </ul>
+    <form action="/add" method="post">
+        <input type="text" name="activity" placeholder="Add new activity" required>
+        <button type="submit">Add</button>
+    </form>
+</body>
+</html>
